@@ -1,3 +1,6 @@
+
+import { normalize, probAtLeastOnce, probAtLeastOnceWithout, binomPMF } from './probability.js';
+
 // Utilities
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
@@ -79,6 +82,7 @@ byId('aff1').href = "https://www.drivethrurpg.com/?affiliate_id=YOUR_ID";
     }
   }
 })();
+
 
 // Core: convert entries to probabilities
 function normalize(entries) {
