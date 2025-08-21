@@ -15,6 +15,16 @@
 </header>
 
 <main>
+  <section id="howto">
+    <details>
+      <summary>How to Use</summary>
+      <ol>
+        <li>Load a preset or enter your own table with weights or ranges.</li>
+        <li>Choose how many rolls to simulate and whether results repeat.</li>
+        <li>Hit <strong>Compute</strong> to see drop chances and distributions.</li>
+      </ol>
+    </details>
+  </section>
   <section id="table-source">
     <h2>1) Loot Table</h2>
 
@@ -38,6 +48,7 @@
 
     <details>
       <summary>Quick Editor</summary>
+      <p class="small">Fill weight or range (a-b). Click × to delete a row.</p>
       <div id="editor"></div>
       <button id="addRow">Add Row</button>
     </details>
@@ -70,6 +81,7 @@
     <div id="exportBtns" class="row">
       <button id="exportCSV">Export CSV</button>
       <button id="shareURL">Share Table Link</button>
+      <button id="copyTable">Copy Table</button>
       <button id="reset">Reset</button>
     </div>
   </section>

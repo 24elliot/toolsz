@@ -98,13 +98,15 @@ function renderEditor() {
     const name = document.createElement('input'); name.value = e.name; name.placeholder = "Name";
     const weight = document.createElement('input'); weight.type = 'number'; weight.step = '1'; weight.value = e.weight ?? '';
     const range = document.createElement('input'); range.placeholder = 'a-b'; range.value = e.range?`${e.range[0]}-${e.range[1]}`:'';
-    row.append(name, weight, range);
+    const del = document.createElement('button'); del.textContent = '×'; del.className = 'icon-btn'; del.title = 'Delete row';
+    row.append(name, weight, range, del);
     name.oninput = () => { e.name = name.value; persist(); };
     weight.oninput = () => { e.weight = Number(weight.value||0); e.range = undefined; persist(); };
     range.oninput = () => {
       const m = range.value.match(/^\s*(\d+)\s*-\s*(\d+)\s*$/);
       if (m) { e.range = [Number(m[1]), Number(m[2])]; e.weight = undefined; persist(); }
     };
+    del.onclick = () => { state.entries.splice(i,1); renderEditor(); renderResults(); persist(); };
     container.appendChild(row);
   });
   byId('addRow').onclick = () => { state.entries.push({name:"New Item", weight:1}); renderEditor(); persist(); };
@@ -142,3 +144,10 @@ function renderResults() {
 
   persist();
 }
+
+// Copy table results
+byId('copyTable').onclick = () => {
+  const text = byId('tableResults').innerText;
+  navigator.clipboard.writeText(text);
+  alert('Table copied to clipboard.');
+};
