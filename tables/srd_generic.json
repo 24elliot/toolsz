@@ -1,0 +1,8 @@
+[
+  {"name":"Minor Gem","range":[1,15]},
+  {"name":"Potion of Healing","range":[16,30]},
+  {"name":"Common Trinket","range":[31,60]},
+  {"name":"Coin Pouch","range":[61,85]},
+  {"name":"Scroll (Cantrip)","range":[86,95]},
+  {"name":"+1 Ammunition (single)","range":[96,100]}
+]
