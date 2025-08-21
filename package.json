@@ -1,0 +1,8 @@
+{
+  "name": "toolsz",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node test/probability.test.js"
+  }
+}

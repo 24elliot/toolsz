@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toolsz Loot Probability Calculator</title>
+  <meta name="description" content="Toolsz helps DMs compute loot table probabilities, expected drops, and distributions. Import your own tables. Fast, free, no signup." />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Ad slot top (paste your network script here) -->
+</head>
+<body>
+<header>
+  <h1>Toolsz Loot Probability Calculator</h1>
+  <p class="sub">Weighted or range-based loot tables. Exact probabilities for N rolls.</p>
+</header>
+
+<main>
+  <section id="table-source">
+    <h2>1) Loot Table</h2>
+
+    <details open>
+      <summary>Presets</summary>
+      <select id="presetSelect">
+        <option value="tables/srd_generic.json">SRD Generic Loot</option>
+      </select>
+      <button id="loadPreset">Load</button>
+      <p class="small">Presets are generic and system-agnostic. Import your own below.</p>
+    </details>
+
+    <details>
+      <summary>Paste JSON</summary>
+      <textarea id="jsonInput" placeholder='[{"name":"Minor Gem","weight":5},{"name":"Potion","weight":2}] or [{"name":"Minor Gem","range":[1,20]},...]'></textarea>
+      <div class="row">
+        <button id="loadJSON">Use JSON</button>
+        <button id="downloadJSON">Download Current</button>
+      </div>
+    </details>
+
+    <details>
+      <summary>Quick Editor</summary>
+      <div id="editor"></div>
+      <button id="addRow">Add Row</button>
+    </details>
+  </section>
+
+  <section id="rolls">
+    <h2>2) Rolling Model</h2>
+    <label>Rolls per chest/encounter:
+      <input type="number" id="numRolls" min="1" value="3" />
+    </label>
+    <label>Sampling:
+      <select id="sampling">
+        <option value="with">With replacement</option>
+        <option value="without">Without replacement</option>
+      </select>
+    </label>
+    <label>Rounding:
+      <select id="rounding">
+        <option value="perc">Percent</option>
+        <option value="prob">0–1</option>
+      </select>
+    </label>
+    <button id="compute">Compute</button>
+  </section>
+
+  <section id="results">
+    <h2>3) Results</h2>
+    <div id="summary"></div>
+    <div id="tableResults"></div>
+    <div id="exportBtns" class="row">
+      <button id="exportCSV">Export CSV</button>
+      <button id="shareURL">Share Table Link</button>
+      <button id="reset">Reset</button>
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2>DM Notes</h2>
+    <ul>
+      <li>Weights auto-normalize; range tables map d100 bands.</li>
+      <li>“With replacement” ≈ d100 re-rolling each pick. “Without” draws unique results.</li>
+      <li>“Chance at least once” uses exact binomial/hypergeometric math.</li>
+    </ul>
+  </section>
+
+  <section id="support">
+    <h2>Support this tool</h2>
+    <p>Found it useful? <a href="#" id="tipLink">Buy Me a Coffee</a>. Browse our <a href="#" id="aff1">recommended loot supplements</a>.</p>
+    <!-- In-content ad slot -->
+    <div id="ad-inline"></div>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="year"></span> Toolsz. No official affiliation.</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
