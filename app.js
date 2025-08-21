@@ -201,3 +201,42 @@ byId('copyTable').onclick = () => {
   navigator.clipboard.writeText(text);
   alert('Table copied to clipboard.');
 };
+function pickIndex(entries) {
+  const weights = entries.map(e => e.range ? (e.range[1] - e.range[0] + 1) : (e.weight || 0));
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < entries.length; i++) {
+    r -= weights[i];
+    if (r < 0) return i;
+  }
+  return entries.length - 1;
+}
+
+function generateLoot() {
+  const pool = state.entries.slice();
+  const loot = [];
+  for (let i = 0; i < state.rolls; i++) {
+    if (!pool.length) break;
+    const idx = pickIndex(pool);
+    loot.push(pool[idx].name);
+    if (state.sampling === 'without') pool.splice(idx, 1);
+  }
+  return loot;
+}
+
+byId('rollLoot').onclick = () => {
+  const loot = generateLoot();
+  const out = byId('lootOutput');
+  out.innerHTML = '';
+  loot.forEach(name => {
+    const li = document.createElement('li');
+    li.textContent = name;
+    out.appendChild(li);
+  });
+  if (!loot.length) {
+    const li = document.createElement('li');
+    li.textContent = 'No loot.';
+    out.appendChild(li);
+  }
+};
+
