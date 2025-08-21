@@ -41,6 +41,8 @@ section {
 details { margin: 8px 0; }
 textarea { width: 100%; min-height: 130px; }
 
+#editor .row { display: grid; grid-template-columns: 3fr 1fr 1fr auto; gap: 8px; margin: 6px 0; align-items: center; }
+
 #editor .row { display: grid; grid-template-columns: 3fr 1fr 1fr; gap: 8px; margin: 6px 0; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; }
 label { display: inline-flex; gap: 6px; align-items: center; margin-right: 16px; }
@@ -57,6 +59,15 @@ button, select, input {
   border: 1px solid var(--border);
   border-radius: 4px;
 }
+
+.icon-btn {
+  background: none;
+  color: inherit;
+  padding: 0 6px;
+  border: none;
+}
+.icon-btn:hover { color: #dc2626; }
+
 
 button {
   background: var(--primary);
