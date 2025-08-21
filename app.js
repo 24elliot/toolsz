@@ -83,6 +83,54 @@ byId('aff1').href = "https://www.drivethrurpg.com/?affiliate_id=YOUR_ID";
 })();
 
 
+
+// Core: convert entries to probabilities
+function normalize(entries) {
+  if (!entries.length) return [];
+  if ('range' in entries[0]) {
+    // Range mode: assume d100 inclusive ranges
+    const weights = entries.map(e => ({name:e.name, weight: e.range[1]-e.range[0]+1}));
+    const total = weights.reduce((a,b)=>a+b.weight,0);
+    return weights.map(w => ({name:w.name, p:w.weight/total}));
+  } else {
+    const total = entries.reduce((a,b)=>a+(b.weight||0),0);
+    return entries.map(e => ({name:e.name, p:(e.weight||0)/total}));
+  }
+}
+
+// Probability item appears at least once
+function probAtLeastOnce(p, n) {
+  // with replacement: 1 - (1-p)^n
+  return 1 - Math.pow(1-p, n);
+}
+
+// Hypergeometric “without replacement” approximation per item:
+// Treat table as a population where expected count for item in N draws without replacement equals N * p.
+// For “at least one”: 1 - C((N_i=0)) which simplifies to product over draws of (1 - p_i_adjusted).
+// We use exact no-replacement product: Π_{k=0}^{n-1} (1 - p * (M/(M- k))) where M is large proxy.
+// Simpler and accurate enough for DM usage: 1 - Π_{k=0}^{n-1} (1 - p * ((T)/(T- k)))
+// where T is table size proxy; set T=entries.length.
+function probAtLeastOnceWithout(p, n, T) {
+  let q = 1;
+  for (let k=0;k<n;k++) {
+    const adj = p * (T/(T - k));
+    q *= Math.max(0, 1 - Math.min(adj,1));
+  }
+  return 1 - q;
+}
+
+// Full binomial distribution with replacement
+function binomPMF(p, n) {
+  // returns array of length n+1
+  const pmf = new Array(n+1).fill(0);
+  let coeff = 1; // nC0
+  for (let k=0;k<=n;k++) {
+    if (k>0) coeff = coeff * (n - (k-1)) / k;
+    pmf[k] = coeff * Math.pow(p, k) * Math.pow(1-p, n-k);
+  }
+  return pmf;
+}
+
 function setEntries(entries) {
   state.entries = entries.map(e => ({name: String(e.name||"Item"), ...(e.range?{range:e.range}:{weight:Number(e.weight||0)})}));
   renderEditor();
@@ -100,6 +148,8 @@ function renderEditor() {
     const range = document.createElement('input'); range.placeholder = 'a-b'; range.value = e.range?`${e.range[0]}-${e.range[1]}`:'';
     const del = document.createElement('button'); del.textContent = '×'; del.className = 'icon-btn'; del.title = 'Delete row';
     row.append(name, weight, range, del);
+
+    row.append(name, weight, range);
     name.oninput = () => { e.name = name.value; persist(); };
     weight.oninput = () => { e.weight = Number(weight.value||0); e.range = undefined; persist(); };
     range.oninput = () => {
