@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Toolsz – Loot Probability Calculator</title>
-  <meta name="description" content="Toolsz – a fast D&D loot probability calculator letting you import tables, compute drop chances, and share results. Free, no signup." />
-  <title>Toolsz Loot Probability Calculator</title>
-  <meta name="description" content="Toolsz helps DMs compute loot table probabilities, expected drops, and distributions. Import your own tables. Fast, free, no signup." />
+  <title>Toolsz – D&D Loot Generator</title>
+  <meta name="description" content="Toolsz – a fast D&D loot generator letting you import tables, compute drop chances, and roll random loot. Free, no signup." />
+  <title>Toolsz D&D Loot Generator</title>
+  <meta name="description" content="Toolsz helps DMs generate random loot and compute drop chances. Import your own tables. Fast, free, no signup." />
   <link rel="stylesheet" href="style.css" />
   <!-- Ad slot top (paste your network script here) -->
 </head>
 <body>
 <header>
-  <h1>Toolsz – Loot Probability Calculator</h1>
-  <h1>Toolsz Loot Probability Calculator</h1>
+  <h1>Toolsz – D&D Loot Generator</h1>
+  <h1>Toolsz D&D Loot Generator</h1>
   <p class="sub">Weighted or range-based loot tables. Exact probabilities for N rolls.</p>
 </header>
 
@@ -25,6 +25,7 @@
         <li>Load a preset or enter your own table with weights or ranges.</li>
         <li>Choose how many rolls to simulate and whether results repeat.</li>
         <li>Hit <strong>Compute</strong> to see drop chances and distributions.</li>
+        <li>Hit <strong>Roll Loot</strong> to generate random drops.</li>
       </ol>
     </details>
   </section>
@@ -81,6 +82,8 @@
     <h2>3) Results</h2>
     <div id="summary"></div>
     <div id="tableResults"></div>
+    <button id="rollLoot">Roll Loot</button>
+    <ul id="lootOutput"></ul>
     <div id="exportBtns" class="row">
       <button id="exportCSV">Export CSV</button>
       <button id="shareURL">Share Table Link</button>
